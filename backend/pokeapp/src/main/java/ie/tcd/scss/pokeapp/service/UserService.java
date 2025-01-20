@@ -1,5 +1,7 @@
 package ie.tcd.scss.pokeapp.service;
 
+import ie.tcd.scss.pokeapp.domain.Pokemon;
+import ie.tcd.scss.pokeapp.dto.PokemonDTO;
 import ie.tcd.scss.pokeapp.dto.UserDTO;
 import ie.tcd.scss.pokeapp.entity.UserEntity;
 import ie.tcd.scss.pokeapp.exception.UserAlreadyExistsException;
@@ -22,6 +24,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private PokemonService pokemonService;
 
     /**
      * Creates a new UserEntity and adds it to the database
@@ -53,9 +58,11 @@ public class UserService {
         if (user == null) {
             throw new IllegalArgumentException("User " + username + " not found.");
         }
+        List<PokemonDTO> favoritePokemonDTOs = getFavoritePokemons(username);
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(user.getUsername());
         userDTO.setPokemonCount(user.getPokemonCount());
+        userDTO.setFavorites(favoritePokemonDTOs);
         return userDTO;
     }   
 
@@ -90,7 +97,58 @@ public class UserService {
         }
         return user.getPokemonCount();
     }    
+
+    public List<PokemonDTO> getFavoritePokemons(String username) {
+        UserEntity user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new IllegalArgumentException("User " + username + " not found.");
+        }
+        Set<String> favoriteNames = user.getFavorites();
+        List<PokemonDTO> favoritePokemonDTOs = new ArrayList<>();
+        for (String pokemonName : favoriteNames) {
+            Pokemon pokemon = pokemonService.getPokemonByName(pokemonName);
+            if (pokemon != null) {
+                PokemonDTO pokemonDTO = pokemonService.getPokemonInfo(pokemon);
+                pokemonDTO.setFavorite(true);
+                favoritePokemonDTOs.add(pokemonDTO);
+            }
+        }
+        return favoritePokemonDTOs;
+    }
+
+    public void addPokemonToFavorites(String username, String pokemonName) {
+        UserEntity user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new IllegalArgumentException("User " + username + " not found.");
+        }
+        Set<String> favorites = user.getFavorites();
+        if (favorites.contains(pokemonName)) {
+            throw new IllegalArgumentException("Pokemon " + pokemonName + " is already in the favorites list.");
+        }
+        Pokemon pokemon = pokemonService.getPokemonByName(pokemonName);
+        if (pokemon != null) {
+            favorites.add(pokemonName);
+            user.setFavorites(favorites);
+            userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("Pokemon " + pokemonName + " does not exist.");
+        }
+    }
     
+
+    public void deletePokemonFromFavorites(String username, String pokemonName) {
+        UserEntity user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new IllegalArgumentException("User " + username + " not found.");
+        }
+        Set<String> favorites = user.getFavorites();
+        if (!favorites.contains(pokemonName)) {
+            throw new IllegalArgumentException("Pokemon " + pokemonName + " is not in the favorites list.");
+        }
+        favorites.remove(pokemonName);
+        user.setFavorites(favorites);
+        userRepository.save(user);
+    }
 
     private String validDTO(UserDTO userDTO) {
         if (userDTO.getUsername() == null || userDTO.getUsername().isEmpty()) {

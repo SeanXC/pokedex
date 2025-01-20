@@ -46,4 +46,35 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }    
+
+    @PutMapping("/{username}/updatePokemonCount")
+    public ResponseEntity<String> incrementAndGetPokemonCount(@PathVariable String username) {
+        try {
+            int updatedCount = userService.incrementAndGetPokemonCount(username);
+            return ResponseEntity.ok("Pokemon count incremented by 1. Updated count: " + updatedCount);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
+    @PutMapping("/{username}/add/{pokemonName}")
+    public ResponseEntity<String> addPokemonToFavorites(@PathVariable String username, @PathVariable String pokemonName) {
+        try {
+            userService.addPokemonToFavorites(username, pokemonName);
+            return ResponseEntity.ok("Pokemon " + pokemonName + " added to favorites for user " + username);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{username}/delete/{pokemonName}")
+    public ResponseEntity<String> deletePokemonFromFavorites(@PathVariable String username, @PathVariable String pokemonName) {
+        try {
+            userService.deletePokemonFromFavorites(username, pokemonName);
+            return ResponseEntity.ok("Pokemon " + pokemonName + " removed from favorites for user " + username);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

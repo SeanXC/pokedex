@@ -6,6 +6,7 @@ public class UserDTO {
     private String password;
     private String confirmPassword;
     private int pokemonCount;
+    private List<PokemonDTO> favorites;
 
     // Getters and Setters for userDTO
     public String getUsername() {
@@ -34,5 +35,12 @@ public class UserDTO {
     }
     public void setPokemonCount(int pokemonCount) {
         this.pokemonCount = pokemonCount;
+    }
+
+    public List<PokemonDTO> getFavorites() {
+        return favorites;
+    }
+    public void setFavorites(List<PokemonDTO> favorites) {
+        this.favorites = favorites;
     }
 }
