@@ -1,0 +1,11 @@
+.create-account-container {
+    text-align: center;
+    vertical-align: top;
+    display:inline-block;
+    border-radius: 25px;
+    width: 40%;
+    height: 42.5vh;
+    margin-left: 5%; 
+    margin-top:2.5%;
+    background-color: #bfe4ff;
+}

@@ -1,0 +1,66 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    max-width: 260px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    text-align: center;
+    background-color: #f7f7f7;
+    font-family: 'Arial', sans-serif;
+}
+
+.card:hover {
+    background-color: #f0f0f0;
+}
+
+.favoriteButton {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 30px;
+    color: black;
+    background: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+.favoriteButton:focus {
+    outline: none;
+}
+
+.image {
+    width: 180px;
+    height: 180px;
+    background: none;
+}
+  
+.name {
+    font-size: 1.2em;
+}
+
+.number {
+    font-size: 1em;
+    color: #888;
+}
+
+.types {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.type {
+    padding: 4px 8px;
+    border-radius: 12px;
+    color: white;
+    font-size: 0.8em;
+}
