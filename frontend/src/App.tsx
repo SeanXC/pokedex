@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Pokedex from './pages/Pokedex';
 import WhosThatPokemon from './pages/WhosThatPokemon';
 import MyAccount from './pages/MyAccount';
-
+import './App.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('Pokedex');
@@ -26,7 +26,6 @@ function App() {
       {renderPage()}
     </Header>
   );
-
 }
 
-export default App
+export default App;
