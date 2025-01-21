@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PokemonList from '../components/PokemonList';
 import { Pokemon } from '../types/Pokemon';
 import loadingIcon from '../assets/loading.svg';
 
-const Pokedex: React.FC = () => {
-  const [loading, setLoading] = useState(true);
+interface PokedexProps {
+  pokemons: Pokemon[];
+  onToggleFavorite: (id: number) => void;
+}
 
-  const initialPokemonList: Pokemon[] = [
-    { id: 1, name: 'Bulbasaur', imageUrl: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png', types: ['Grass', 'Poison'], isFavorite: false },
-    { id: 4, name: 'Charmander', imageUrl: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png', types: ['Fire'], isFavorite: false },
-    { id: 25, name: 'Pikachu', imageUrl: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png', types: ['Electric'], isFavorite: false },
-  ];
+const Pokedex: React.FC<PokedexProps> = ({ pokemons, onToggleFavorite }) => {
+  const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -27,10 +26,11 @@ const Pokedex: React.FC = () => {
           <img src={loadingIcon} alt="Loading" className="loading-icon" />
         </div>
       ) : (
-        <PokemonList pokemons={initialPokemonList} />
+        <PokemonList pokemons={pokemons} onToggleFavorite={onToggleFavorite} />
       )}
     </div>
   );
 };
 
 export default Pokedex;
+

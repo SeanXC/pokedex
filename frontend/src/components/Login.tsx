@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 //import { useNavigate, Link } from "react-router-dom";
 import "./Login.css"
+import login from "../assets/login.png"
 
 
 
@@ -22,17 +23,15 @@ const Login:React.FC = () => {
     return(
         <div className="login-container">
             <h4>Login</h4>
-            <form onSubmit= { handleLogin } method="post">
-            <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Username </label>
-                    <input onChange={e => {setUsername(e.target.value)}} type="username" className="form-control" id="username"/>
+            <img src={login} className="login-img"></img>
+            <form onSubmit= { handleLogin } method="post" className="input-form">
+                <div className="fields">
+                        <label htmlFor="email" className="form-label">Username </label>
+                        <input onChange={e => {setUsername(e.target.value)}} type="username" className="form-control" id="username"/>
+                        <label htmlFor="password" className="form-label">Password </label>
+                        <input onChange={e => {setPassword(e.target.value)}} type="password" className="form-control" id="password"/>
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password </label>
-                    <input onChange={e => {setPassword(e.target.value)}} type="password" className="form-control" id="password"/>
-                </div>
-                <br></br>
-                <button type="submit" className="btn btn-primary">LOG IN</button>
+                <button type="submit" className="login-btn">LOG IN</button>
             </form>
         </div>        
     );

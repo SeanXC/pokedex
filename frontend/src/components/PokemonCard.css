@@ -36,6 +36,26 @@
     outline: none;
 }
 
+.deleteButton {
+    position: absolute;
+    top: 5px; 
+    right: 10px; 
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+    background: none;
+    border: none; 
+    cursor: pointer; 
+    padding: 0; 
+  }
+  
+  .deleteButton:focus {
+    outline: none;
+  }
+  
+  .deleteButton:hover {
+    color: rgb(189, 9, 9); 
+  }  
+
 .image {
     width: 180px;
     height: 180px;

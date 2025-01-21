@@ -14,8 +14,8 @@ const Home: React.FC = () => {
                 </p>
             </div>
             <div className='account-container'>
-                <CreateAccount />
                 <Login />
+                <CreateAccount />
             </div>
         </div>
     ); 

@@ -34,4 +34,6 @@ body, html {
   width: 60%; 
   height: 50vh;
   margin-left: 20%;
+  display: flex;
+  min-height:340px;
 }

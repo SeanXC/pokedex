@@ -1,9 +1,10 @@
 .login-container {
+    display:inline-flex;
+    flex-flow: column;
     vertical-align: top;
-    display:inline-block;
     border-radius: 25px;
     width: 40%;
-    height: 42.5vh;
+    height: 50vh;
     margin-left: 10%; 
     margin-top: 2.5%;
     background-color: #bfe4ff;
@@ -12,4 +13,21 @@
 
 input {
     border-radius: 10px;
+}
+
+.login-img {
+    align-self: center;
+    width: 40%; 
+}
+
+.input-form {
+    display:flex; 
+    flex-direction: column;
+    flex-grow:100; 
+}
+
+.login-btn {
+    margin-top:auto;
+    margin-bottom:10px;
+    align-self: center;
 }
