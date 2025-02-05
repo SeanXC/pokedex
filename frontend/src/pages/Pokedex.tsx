@@ -1,40 +1,17 @@
 import React from 'react';
 import PokemonList from '../components/PokemonList';
 import { Pokemon } from '../types/Pokemon';
-import SearchBar from '../components/SearchBar';
-import loadingIcon from '../assets/loading.svg';
 
-interface PokedexProps {
-  pokemons: Pokemon[];
-  onToggleFavorite: (id: number) => void;
-}
-
-const Pokedex: React.FC<PokedexProps> = ({ pokemons, onToggleFavorite }) => {
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
+const Pokedex: React.FC = () => {
+  const initialPokemonList: Pokemon[] = [
+    { id: 1, name: 'Bulbasaur', imageUrl: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png', types: ['Grass', 'Poison'], isFavorite: false },
+    { id: 4, name: 'Charmander', imageUrl: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png', types: ['Fire'], isFavorite: false },
+    { id: 25, name: 'Pikachu', imageUrl: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png', types: ['Electric'], isFavorite: false },
+  ]; 
 
   return (
-    <div>
-      {loading ? (
-        <div className="loading">
-          <img src={loadingIcon} alt="Loading" className="loading-icon" />
-        </div>
-      ) : (
-        <>
-          <SearchBar placeHolder="Search a pokemon by name or number" onSearch={() => { } } />
-          <PokemonList pokemons={pokemons} onToggleFavorite={onToggleFavorite} />
-        </>
-      )}
-    </div>
-  );
+    <PokemonList pokemons={initialPokemonList}/>
+  )
 };
 
 export default Pokedex;
-
