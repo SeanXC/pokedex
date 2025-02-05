@@ -1,6 +1,6 @@
-import React from 'react';
-import './Header.css';
-import logo from '../assets/logo.svg';
+import React from "react";
+import "./Header.css";
+import logo from "../assets/logo.svg";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -8,40 +8,40 @@ interface HeaderProps {
   currentPage: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ children, onNavigate, currentPage }) => {
+const Header: React.FC<HeaderProps> = ({
+  children,
+  onNavigate,
+  currentPage,
+}) => {
   return (
-    <div className="layout">
+    <>
       <header className="header">
-        <img src={logo} alt="PokeQuiz Logo" className="logo" />
-        <nav>
-          <div className="nav-left">
-            <button
-              onClick={() => onNavigate('Pokedex')}
-              className={currentPage === 'Pokedex' ? 'active' : ''}
-            >
-              Pokedex
-            </button>
-          </div>
-          <div className="nav-center">
-            <button
-              onClick={() => onNavigate('WhosThatPokemon')}
-              className={currentPage === 'WhosThatPokemon' ? 'active' : ''}
-            >
-              Who’s that pokemon
-            </button>
-          </div>
-          <div className="nav-right">
-            <button
-              onClick={() => onNavigate('MyAccount')}
-              className={currentPage === 'MyAccount' ? 'active' : ''}
-            >
-              My account
-            </button>
-          </div>
-        </nav>
+        <div className="center">
+          <img src={logo} alt="PokeQuiz Logo" className="logo" />
+        </div>
+        <div className="nav">
+          <button
+            onClick={() => onNavigate("Pokedex")}
+            className={currentPage === "Pokedex" ? "active" : ""}
+          >
+            Pokedex
+          </button>
+          <button
+            onClick={() => onNavigate("WhosThatPokemon")}
+            className={currentPage === "WhosThatPokemon" ? "active" : ""}
+          >
+            Who’s that pokemon
+          </button>
+          <button
+            onClick={() => onNavigate("MyAccount")}
+            className={currentPage === "MyAccount" ? "active" : ""}
+          >
+            My account
+          </button>
+        </div>
       </header>
       <main>{children}</main>
-    </div>
+    </>
   );
 };
 

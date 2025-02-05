@@ -1,0 +1,18 @@
+.account-card {
+  width: 100%;
+  max-width: 200px;
+  padding: 20px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  background-color: #bfe4ff;
+  margin-bottom: 30px;
+}
+
+.icon {
+  align-self: center;
+  font-size: 70px;
+  color: #3967ab;
+  margin-top: 10px;
+}
+  

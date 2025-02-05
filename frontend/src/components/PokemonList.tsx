@@ -1,39 +1,38 @@
-import React, { useState } from 'react';
-import PokemonCard from './PokemonCard';
-import { Pokemon } from '../types/Pokemon';
-import './PokemonList.css';
+import React from "react";
+import PokemonCard from "./PokemonCard";
+import { Pokemon } from "../types/Pokemon";
+import "./PokemonList.css";
 
 interface PokemonListProps {
-    pokemons: Pokemon[];
+  pokemons: Pokemon[];
+  onToggleFavorite?: () => void;
+  onRemove?: () => void;
+  isFavoriteList?: boolean;
 }
 
-const PokemonList: React.FC<PokemonListProps> = ({ pokemons }) => {
-    const [pokemonList, setPokemonList] = useState<Pokemon[]>(pokemons);
-
-    const onToggleFavorite = (id: number) => {
-        setPokemonList((prevList) =>
-            prevList.map((pokemon) =>
-                pokemon.id === id ? { ...pokemon, isFavorite: !pokemon.isFavorite } : pokemon
-            )
-        );
-    };
-
-    return (
-        <div className= "pokemonGrid" >
-        {
-            pokemonList.map((pokemon) => (
-                <PokemonCard
-                    id = { pokemon.id }
-                    name = { pokemon.name } 
-                    imageUrl = { pokemon.imageUrl }
-                    types = { pokemon.types }
-                    isFavorite = { pokemon.isFavorite }
-                    onToggleFavorite = { onToggleFavorite }
-                />
-            ))
-        }
-        </div>
-    );
+const PokemonList: React.FC<PokemonListProps> = ({
+  pokemons,
+  onToggleFavorite,
+  onRemove,
+  isFavoriteList = false,
+}) => {
+  return (
+    <div className="pokemonGrid">
+      {pokemons.map((pokemon) => (
+        <PokemonCard
+          key={pokemon.id}
+          id={pokemon.id}
+          name={pokemon.name}
+          image={pokemon.image}
+          types={pokemon.types}
+          isFavorite={pokemon.isFavorite}
+          onToggleFavorite={onToggleFavorite}
+          onRemove={onRemove}
+          isFavoriteList={isFavoriteList}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default PokemonList;

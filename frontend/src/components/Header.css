@@ -1,104 +1,53 @@
-/* Header.css styling */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.header {
+  background-color: #BFE4FF;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Logo position and animation */
+.header .logo {
+  height: 130px;
+  animation: pulse 1.5s infinite;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
   }
-  
-  /* whole background color and font */
-  body, html {
-    background-color: #ffffff; 
-    font-family: Arial, sans-serif;
-    height: 100%;
+  50% {
+    transform: scale(1.1); 
   }
-  
-  .layout {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  /* header setting */
-  .header {
-    background-color: #BFE4FF;
-    height: 150px; 
-    width: 100vw;
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-  }
-  
-  .header {
-    background-color: #BFE4FF;
-    height: 150px;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  
-  /* Logo position and animation */
-  .header .logo {
-    position: absolute;
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%); 
-    height: 130px;
-    animation: pulse 1.5s infinite;
-  }
-  
-  @keyframes pulse {
-    0%, 100% {
-      transform: translateX(-50%) scale(1);
-    }
-    50% {
-      transform: translateX(-50%) scale(1.1); 
-    }
-  }   
-  
-  /* navigation Bar Styling */
-  .header nav {
-    display: flex;
-    width: 100%; 
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-  }
-  
-  /* navigation position */
-  .nav-left, .nav-center, .nav-right {
-    flex: 1; 
-    display: flex;
-    justify-content: center;
-  }
-  
-  .nav-left {
-    justify-content: flex-start;
-  }
-  
-  .nav-right {
-    justify-content: flex-end; 
-  }
-  
-  /* header button styling */
-  .header button {
-    background: none;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    color: #1F3266;
-    margin-top: 105px;
-    outline: none;
-    font-size: 22px; 
-  }
-  
-  .header button:focus,
-  .header button:hover {
-    text-decoration: underline; 
-  }
-  
-  .header button:hover,
-  .header button.active {
-    text-decoration: underline;
-  }
+}   
+
+/* navigation Bar Styling */
+.header .nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* header button styling */
+.header button {
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  color: #1F3266;
+  outline: none;
+  font-size: 22px; 
+}
+
+.header button:focus,
+.header button:hover {
+  text-decoration: underline; 
+}
+
+.header button:hover,
+.header button.active {
+  text-decoration: underline;
+}

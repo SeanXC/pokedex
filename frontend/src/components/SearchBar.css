@@ -1,0 +1,35 @@
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding: 10px;
+}
+  
+.search-bar-input {
+    width: 60%;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: #f7f7f7;
+    box-shadow: none;
+    outline: none;
+}
+.search-bar-input:hover {
+    background-color: #f0f0f0;
+}
+
+.search-icon {
+    color: #888888; 
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.validate-icon {
+    color: #888888; 
+    margin-left: 10px;
+    font-size: 20px;
+}
+.validate-icon:hover {
+    color: darkgreen;
+}

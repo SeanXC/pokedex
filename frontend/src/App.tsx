@@ -1,37 +1,39 @@
-import { useState } from 'react';
-import Header from './components/Header';
-import Pokedex from './pages/Pokedex';
-import WhosThatPokemon from './pages/WhosThatPokemon';
-import MyAccount from './pages/MyAccount';
+import { useState } from "react";
+import Header from "./components/Header";
+import Pokedex from "./pages/Pokedex";
+import WhosThatPokemon from "./pages/WhosThatPokemon";
+import MyAccount from "./pages/MyAccount";
 import Home from "./pages/Home";
+import "@fortawesome/fontawesome-free/css/all.css";
+import "./App.css";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('Pokedex');
-  let logged_in = false; 
+  const [currentPage, setCurrentPage] = useState("Home");
+  const [username, setUsername] = useState("");
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'Pokedex':
-        return <Pokedex />;
-      case 'WhosThatPokemon':
-        return <WhosThatPokemon />;
-      case 'MyAccount':
-        return <MyAccount />;
+      case "Home":
+        return <Home setPage={setCurrentPage} setUsername={setUsername} />;
+      case "Pokedex":
+        return <Pokedex username={username} />;
+      case "WhosThatPokemon":
+        return <WhosThatPokemon username={username} />;
+      case "MyAccount":
+        return <MyAccount setPage={setCurrentPage} username={username} />;
       default:
-        return <Pokedex />;
+        return <Home setPage={setCurrentPage} setUsername={setUsername} />;
     }
   };
 
-  if(logged_in) {
+  if (currentPage != "Home") {
     return (
       <Header onNavigate={setCurrentPage} currentPage={currentPage}>
         {renderPage()}
       </Header>
     );
   } else {
-    return (
-      <Home />
-    );
+    return <Home setPage={setCurrentPage} setUsername={setUsername} />;
   }
 }
 
