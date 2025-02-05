@@ -13,10 +13,6 @@ const MyAccount: React.FC<MyAccountProps> = ({ setPage, username }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User>();
 
-  // TODO:
-  //const [showAll, setShowAll] = useState(false);
-  //const visibleFavorites = showAll ? favorites : favorites.slice(0, 5);
-
   useEffect(() => {
     fetchUser();
   }, []);
@@ -36,12 +32,40 @@ const MyAccount: React.FC<MyAccountProps> = ({ setPage, username }) => {
         setUser(await response.json());
       } else {
         const errorText = await response.text();
-        console.error("Error fetching user:", errorText);
+        console.error(`Error fetching user:${errorText}`);
       }
     } catch (error) {
-      console.error("Unable to send request:", error);
+      console.error(`Unable to send request:${error}`);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const deleteFavorite = async (pokemonName: string) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/user/${username}/delete/${pokemonName}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "cors",
+        }
+      );
+      if (response.ok) {
+        if (user) {
+          const newFavorites = user.favorites.filter(
+            (o) => o.name !== pokemonName
+          );
+          setUser({ ...user, favorites: newFavorites });
+        }
+        alert(await response.text());
+      } else {
+        console.error("Error during deleteFavorite", await response.text());
+      }
+    } catch (error) {
+      console.error(`Unable to send request:${error}`);
     }
   };
 
@@ -75,19 +99,9 @@ const MyAccount: React.FC<MyAccountProps> = ({ setPage, username }) => {
             <>
               <PokemonList
                 pokemons={user.favorites}
-                onRemove={() => {
-                  /*TODO*/
-                }}
+                onRemove={deleteFavorite}
                 isFavoriteList={true}
               />
-              {/* <div className="center">
-                <button
-                  className="button"
-                  onClick={() => setShowAll((prev) => !prev)}
-                >
-                  {showAll ? "View Less" : "View More"}
-                </button>
-              </div> */}
             </>
           ) : (
             <p className="no-favorites center">

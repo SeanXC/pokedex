@@ -26,15 +26,16 @@ function App() {
     }
   };
 
-  if (currentPage != "Home") {
-    return (
-      <Header onNavigate={setCurrentPage} currentPage={currentPage}>
-        {renderPage()}
-      </Header>
-    );
-  } else {
-    return <Home setPage={setCurrentPage} setUsername={setUsername} />;
-  }
+  return (
+    <>
+      {(currentPage === "Pokedex" ||
+        currentPage === "WhosThatPokemon" ||
+        currentPage === "MyAccount") && (
+        <Header onNavigate={setCurrentPage} currentPage={currentPage} />
+      )}
+      {renderPage()}
+    </>
+  );
 }
 
 export default App;

@@ -3,16 +3,11 @@ import "./Header.css";
 import logo from "../assets/logo.svg";
 
 interface HeaderProps {
-  children: React.ReactNode;
   onNavigate: (page: string) => void;
   currentPage: string;
 }
 
-const Header: React.FC<HeaderProps> = ({
-  children,
-  onNavigate,
-  currentPage,
-}) => {
+const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
   return (
     <>
       <header className="header">
@@ -40,7 +35,6 @@ const Header: React.FC<HeaderProps> = ({
           </button>
         </div>
       </header>
-      <main>{children}</main>
     </>
   );
 };

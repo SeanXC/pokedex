@@ -18,13 +18,12 @@ const Pokedex: React.FC<PokedexProps> = ({ username }) => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 1000);
-
     return () => clearTimeout(timer);
   }, []);
 
   React.useEffect(() => {
     const handler = setTimeout(() => {
-      if (substring !== "") fetchPokemons(); // TODO: remove if when backend works
+      fetchPokemons();
     }, 300);
     return () => clearTimeout(handler);
   }, [substring]);
@@ -32,37 +31,72 @@ const Pokedex: React.FC<PokedexProps> = ({ username }) => {
   const fetchPokemons = async () => {
     setPokemonsLoading(true);
     try {
-      const response = await fetch(
-        `http://localhost:8080/game/pokemon/substring/${substring}`, // TODO: username when backend works
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          mode: "cors",
-        }
-      );
+      const url =
+        substring !== ""
+          ? `http://localhost:8080/pokemon/${username}/substring/${substring}`
+          : `http://localhost:8080/pokemon/${username}/substring`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      });
 
       if (response.ok) {
-        const pokemonsResponse = await response.json();
-        setPokemons(
-          Array.isArray(pokemonsResponse)
-            ? pokemonsResponse
-            : pokemonsResponse.content || []
-        );
+        setPokemons(await response.json());
       } else {
-        const errorText = await response.text();
-        console.error("Error fetching pokemons:", errorText);
+        console.error("Error during fetchPokemons:", await response.text());
       }
     } catch (error) {
-      console.error("Unable to send request:", error);
+      console.error(`Unable to send request:${error}`);
     } finally {
       setPokemonsLoading(false);
     }
   };
 
+  const toggleFavorite = async (
+    pokemonName: string,
+    isCurrentlyFavorite: boolean
+  ) => {
+    try {
+      const url = `http://localhost:8080/user/${username}/${
+        isCurrentlyFavorite ? "delete" : "add"
+      }/${pokemonName}`;
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      });
+
+      if (response.ok) {
+        updateFavoriteStatus(pokemonName, !isCurrentlyFavorite);
+        alert(await response.text());
+      } else {
+        console.error("Error during toggleFavorite: ", await response.text());
+      }
+    } catch (error) {
+      console.error(`Unable to send request:${error}`);
+    }
+  };
+
+  const updateFavoriteStatus = (
+    pokemonName: string,
+    favoriteUpdated: boolean
+  ) => {
+    setPokemons((prevPokemons) =>
+      prevPokemons.map((pokemon) =>
+        pokemon.name === pokemonName
+          ? { ...pokemon, favorite: favoriteUpdated }
+          : pokemon
+      )
+    );
+  };
+
   return (
-    <div>
+    <>
       {loading ? (
         <div className="loading">
           <img src={loadingIcon} alt="Loading" className="loading-icon" />
@@ -78,17 +112,19 @@ const Pokedex: React.FC<PokedexProps> = ({ username }) => {
             <div className="loading">
               <img src={loadingIcon} alt="Loading" className="loading-icon" />
             </div>
-          ) : (
+          ) : pokemons?.length !== 0 ? (
             <PokemonList
               pokemons={pokemons}
-              onToggleFavorite={() => {
-                /*TODO*/
-              }}
+              onToggleFavorite={(pokemonName: string, isFavorite: boolean) =>
+                toggleFavorite(pokemonName, isFavorite)
+              }
             />
+          ) : (
+            <p className="center">No Pokémon matching your search!</p>
           )}
         </>
       )}
-    </div>
+    </>
   );
 };
 

@@ -8,6 +8,7 @@
 .loading-icon {
   width: 250px;
   height: 250px;
+  margin-top: 120px;
   animation: rotate180 1s infinite alternate;
 }
 
@@ -20,5 +21,31 @@
   }
   100% {
     transform: rotate(180deg);
+  }
+}
+
+.message-box {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffcb05;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: fadeOut 3s forwards; 
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

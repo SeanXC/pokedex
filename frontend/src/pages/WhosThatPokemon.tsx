@@ -20,34 +20,50 @@ const WhosThatPokemon: React.FC<WhosThatPokemonProps> = ({ username }) => {
   const fetchRandomPokemon = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `http://localhost:8080/game/pokemon/random/${username}`, // TODO: username in the backend
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          mode: "cors",
-        }
-      );
+      const response = await fetch(`http://localhost:8080/pokemon/random`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      });
 
       if (response.ok) {
         setPokemon(await response.json());
       } else {
         const errorText = await response.text();
-        console.error("Error fetching random pokemon:", errorText);
+        console.error(`Error fetching random pokemon:${errorText}`);
       }
     } catch (error) {
-      console.error("Unable to send request:", error);
+      console.error(`Unable to send request:${error}`);
     } finally {
       setLoading(false);
     }
   };
 
   const checkReponse = () => {
-    if (substring === pokemon?.name) setWin(true);
-    // TODO: update pokemon count
-    else setWin(false);
+    if (substring.toLocaleLowerCase() === pokemon?.name) {
+      setWin(true);
+      updatePokemonCount();
+    } else setWin(false);
+  };
+
+  const updatePokemonCount = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/user/${username}/updatePokemonCount`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "cors",
+        }
+      );
+      alert(await response.text());
+    } catch (error) {
+      console.error(`Unable to send request:${error}`);
+    }
   };
 
   const replay = () => {
@@ -57,7 +73,7 @@ const WhosThatPokemon: React.FC<WhosThatPokemonProps> = ({ username }) => {
   };
 
   return (
-    <div>
+    <>
       {loading ? (
         <div className="loading">
           <img src={loadingIcon} alt="Loading" className="loading-icon" />
@@ -91,7 +107,7 @@ const WhosThatPokemon: React.FC<WhosThatPokemonProps> = ({ username }) => {
           )}
         </>
       )}
-    </div>
+    </>
   );
 };
 

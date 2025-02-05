@@ -1,23 +1,16 @@
 import React from "react";
 import "./PokemonCard.css";
+import { Pokemon } from "../types/Pokemon";
 
 interface PokemonCardProps {
-  id: number;
-  name: string;
-  image: string;
-  types: string[];
-  isFavorite?: boolean;
-  onToggleFavorite?: () => void;
-  onRemove?: () => void;
+  pokemon: Pokemon;
+  onToggleFavorite?: (pokemonName: string) => void;
+  onRemove?: (pokemonName: string) => void;
   isFavoriteList?: boolean;
 }
 
 const PokemonCard: React.FC<PokemonCardProps> = ({
-  id,
-  name,
-  image,
-  types,
-  isFavorite = false,
+  pokemon,
   onToggleFavorite,
   onRemove,
   isFavoriteList = false,
@@ -25,24 +18,27 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   return (
     <div className="card">
       {!isFavoriteList && onToggleFavorite && (
-        <button className="favoriteButton" onClick={() => onToggleFavorite()}>
-          {isFavorite ? "★" : "☆"}
+        <button
+          className="favoriteButton"
+          onClick={() => onToggleFavorite(pokemon.name)}
+        >
+          {pokemon.favorite ? "★" : "☆"}
         </button>
       )}
 
       {isFavoriteList && onRemove && (
-        <button className="deleteButton" onClick={() => onRemove()}>
+        <button className="deleteButton" onClick={() => onRemove(pokemon.name)}>
           ✖
         </button>
       )}
 
-      <img src={image} alt={name} className="image" />
+      <img src={pokemon.image} alt={pokemon.name} className="image" />
 
-      <h2 className="name">{name}</h2>
-      <span className="number">#{id.toString().padStart(3, "0")}</span>
+      <h2 className="name">{pokemon.name}</h2>
+      <span className="number">#{pokemon.id.toString().padStart(3, "0")}</span>
 
       <div className="types">
-        {types.map((type) => (
+        {pokemon.types.map((type) => (
           <span
             key={type}
             className="type"

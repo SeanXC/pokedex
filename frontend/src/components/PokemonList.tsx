@@ -5,8 +5,8 @@ import "./PokemonList.css";
 
 interface PokemonListProps {
   pokemons: Pokemon[];
-  onToggleFavorite?: () => void;
-  onRemove?: () => void;
+  onToggleFavorite?: (pokemonName: string, isFavorite: boolean) => void;
+  onRemove?: (pokemonName: string) => void;
   isFavoriteList?: boolean;
 }
 
@@ -21,13 +21,13 @@ const PokemonList: React.FC<PokemonListProps> = ({
       {pokemons.map((pokemon) => (
         <PokemonCard
           key={pokemon.id}
-          id={pokemon.id}
-          name={pokemon.name}
-          image={pokemon.image}
-          types={pokemon.types}
-          isFavorite={pokemon.isFavorite}
-          onToggleFavorite={onToggleFavorite}
-          onRemove={onRemove}
+          pokemon={pokemon}
+          onToggleFavorite={
+            onToggleFavorite
+              ? () => onToggleFavorite(pokemon.name, pokemon.favorite)
+              : undefined
+          }
+          onRemove={onRemove ? () => onRemove(pokemon.name) : undefined}
           isFavoriteList={isFavoriteList}
         />
       ))}
