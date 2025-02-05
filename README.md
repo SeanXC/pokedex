@@ -2,7 +2,7 @@
 
 ## Demo Video
 
-A [Demo video](to be continued...) gives insight in the
+A [Demo video](https://www.youtube.com/watch?v=Le-VlucOkp4) gives insight in the
 functions of the application.
 
 ### Your companion to the world of Pokemon
