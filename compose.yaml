@@ -1,9 +1,51 @@
+version: '3.8'
+
 services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_pokeapp
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: poke1234
+      POSTGRES_DB: pokeapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   backend:
-    build: ./backend/pokeapp/
+    build: ./backend/pokeapp
+    container_name: spring_pokeapp
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/pokeapp
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: poke1234
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     ports:
       - "8080:8080"
+
   frontend:
-    build: ./frontend/
+    build: ./frontend
+    container_name: frontend_pokeapp
+    depends_on:
+      - backend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8080/api
     ports:
       - "5173:80"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_pokeapp
+    depends_on:
+      - frontend
+    volumes:
+      - ./frontend/nginx:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+
+volumes:
+  postgres_data:
